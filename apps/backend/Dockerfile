@@ -1,14 +1,11 @@
-FROM node:20-alpine
+FROM node:22-alpine
 WORKDIR /app
 
-# Lockfile y manifests de la raíz + del backend
 COPY package.json package-lock.json ./
 COPY apps/backend/package.json ./apps/backend/
 
-# Instala solo lo necesario para el backend (workspace)
 RUN npm ci --workspace=apps/backend --include-workspace-root
 
-# Copia el código del backend
 COPY apps/backend ./apps/backend
 
 WORKDIR /app/apps/backend
